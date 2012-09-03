@@ -16,6 +16,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{DF0DA4
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 Contact Manager Web API", "03 Contact Manager Web API", "{72410227-466E-436F-93ED-F482A58DEE59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactManager", "ContactManagerSample\ContactManager\ContactManager.csproj", "{7777FD27-3538-491C-B3EF-C4DD80F38886}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactManager.Tests", "ContactManagerSample\ContactManager.Tests\ContactManager.Tests.csproj", "{391982B9-A9BC-4408-ABDA-6D38D2D8C831}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +36,14 @@ Global
 		{59D1AFCE-9674-4E20-A343-25D97A070F73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59D1AFCE-9674-4E20-A343-25D97A070F73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59D1AFCE-9674-4E20-A343-25D97A070F73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7777FD27-3538-491C-B3EF-C4DD80F38886}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7777FD27-3538-491C-B3EF-C4DD80F38886}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7777FD27-3538-491C-B3EF-C4DD80F38886}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7777FD27-3538-491C-B3EF-C4DD80F38886}.Release|Any CPU.Build.0 = Release|Any CPU
+		{391982B9-A9BC-4408-ABDA-6D38D2D8C831}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{391982B9-A9BC-4408-ABDA-6D38D2D8C831}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{391982B9-A9BC-4408-ABDA-6D38D2D8C831}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{391982B9-A9BC-4408-ABDA-6D38D2D8C831}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,5 +51,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{C34CD048-C887-4AC0-91D6-74245B729582} = {4C152A36-7671-4950-BB95-73E3186E35DB}
 		{59D1AFCE-9674-4E20-A343-25D97A070F73} = {D2E0BC09-782A-4A8E-8E97-2B26D1228D6F}
+		{7777FD27-3538-491C-B3EF-C4DD80F38886} = {72410227-466E-436F-93ED-F482A58DEE59}
+		{391982B9-A9BC-4408-ABDA-6D38D2D8C831} = {72410227-466E-436F-93ED-F482A58DEE59}
 	EndGlobalSection
 EndGlobal
