@@ -2,6 +2,11 @@
 bin
 obj
 packages/
+_ReSharper*
 
 # mstest test results
 TestResults
+
+# files
+*.suo
+*.user

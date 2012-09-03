@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebForms", "WebForms\WebForms.csproj", "{C34CD048-C887-4AC0-91D6-74245B729582}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 WebForms", "01 WebForms", "{4C152A36-7671-4950-BB95-73E3186E35DB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 MVC", "02 MVC", "{D2E0BC09-782A-4A8E-8E97-2B26D1228D6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc", "Mvc\Mvc.csproj", "{59D1AFCE-9674-4E20-A343-25D97A070F73}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C34CD048-C887-4AC0-91D6-74245B729582}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C34CD048-C887-4AC0-91D6-74245B729582}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C34CD048-C887-4AC0-91D6-74245B729582}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C34CD048-C887-4AC0-91D6-74245B729582}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59D1AFCE-9674-4E20-A343-25D97A070F73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59D1AFCE-9674-4E20-A343-25D97A070F73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59D1AFCE-9674-4E20-A343-25D97A070F73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59D1AFCE-9674-4E20-A343-25D97A070F73}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C34CD048-C887-4AC0-91D6-74245B729582} = {4C152A36-7671-4950-BB95-73E3186E35DB}
+		{59D1AFCE-9674-4E20-A343-25D97A070F73} = {D2E0BC09-782A-4A8E-8E97-2B26D1228D6F}
+	EndGlobalSection
+EndGlobal
