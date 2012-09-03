@@ -1,0 +1,3 @@
+[submodule "WebPackSample"]
+	path = WebPackSample
+	url = git@github.com:panesofglass/WebPackSample.git
