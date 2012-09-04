@@ -1,6 +1,5 @@
-<!doctype html>  
+<!doctype html>
 <html lang="en">
-	
 	<head>
 		<meta charset="utf-8">
 		
@@ -41,7 +40,7 @@
 			<div class="slides">
 				<section data-markdown>
 					# Building Composable Web Applications
-					## Houston Techfest 2012
+					### Houston Techfest 2012
 				</section>
 
 				<section data-markdown>
@@ -67,73 +66,420 @@
 				</section>
 
 				<section>
-					<section>
-						<h2>What is Composition?</h2>
-						<div class="image">
-							<img class="placeholder" src="http://www.dkimages.com/discover/previews/791/961370.JPG" alt="LEGO Blocks" />
-						</div>
+					<h2>What is Composition?</h2>
+					<div class="image">
+						<img class="placeholder" src="http://www.dkimages.com/discover/previews/791/961370.JPG" alt="LEGO Blocks" />
+					</div>
 
+					<aside class="notes">
+						In this talk, I'll focus on architectural, rather than implementation, patterns.
+					</aside>
+				</section>
+
+				<section>
+					<h2>Project Composition</h2>
+					<p class="fragment">Project references</p>
+					<p class="fragment">Assembly references</p>
+					<p class="fragment">NuGet packages</p>
+
+					<aside class="notes">
+						What do I mean by "composition?" There are several ways to look at this term. For starters, you probably already use Project Composition when you build web applications, no matter which framework you currently use. By this I mean that you are likely to have a project for database access and possibly another for your domain in addition to your web project. This form of composition is somewhat unique to web programming because a given page or API call never directly talks to another page or API. Instead, they interact through URLs. Therefore, you can easily go nuts and create a project-per-page or project-per-controller if you really wanted. (I don't recommend this.)
+					</aside>
+				</section>
+
+				<section>
+					<h2>Composition in ASP.NET</h2>
+					<a class="image" href="http://www.hanselman.com/blog/OneASPNETSneakPeekElegantWebFormsAndSnowballsInHell.aspx">
+						<img src="img/one-asp-net.png" alt="One ASP.NET" />
+					</a>
+				</section>
+
+				<section data-markdown>
+					## Composition in ASP.NET
+					1. HTML composition
+					1. File structure composition
+					1. Routing
+					1. ASP.NET event pipeline (modules and handlers)
+				</section>
+
+				<section>
+					<section>
+						<h2>HTML Composition in WebForms</h2>
+						<pre><code contenteditable>&lt;%@ Master Language=&quot;C#&quot; AutoEventWireup=&quot;true&quot; CodeBehind=&quot;Site.master.cs&quot; Inherits=&quot;WebForms.SiteMaster&quot; %&gt;
+
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head runat=&quot;server&quot;&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;title&gt;&lt;%: Page.Title %&gt; - My ASP.NET Application&lt;/title&gt;
+    &lt;asp:PlaceHolder runat=&quot;server&quot;&gt;     
+          &lt;%: Scripts.Render(&quot;~/bundles/modernizr&quot;) %&gt;
+    &lt;/asp:PlaceHolder&gt;  
+    &lt;webopt:BundleReference runat=&quot;server&quot; Path=&quot;~/Content/css&quot; /&gt; 
+    &lt;link href=&quot;~/favicon.ico&quot; rel=&quot;shortcut icon&quot; type=&quot;image/x-icon&quot; /&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot; /&gt;
+    &lt;asp:ContentPlaceHolder runat=&quot;server&quot; ID=&quot;HeadContent&quot; /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;form runat=&quot;server&quot;&gt;
+    &lt;asp:ScriptManager runat=&quot;server&quot;&gt;
+        &lt;Scripts&gt;
+            &lt;%--Framework Scripts--%&gt;
+            &lt;asp:ScriptReference Name=&quot;MsAjaxBundle&quot; /&gt;
+            &lt;asp:ScriptReference Name=&quot;jquery&quot; /&gt;
+            &lt;asp:ScriptReference Name=&quot;jquery.ui.combined&quot; /&gt;
+            &lt;asp:ScriptReference Name=&quot;WebForms.js&quot; Assembly=&quot;System.Web&quot; Path=&quot;~/Scripts/WebForms/WebForms.js&quot; /&gt;
+            &lt;asp:ScriptReference Name=&quot;WebUIValidation.js&quot; Assembly=&quot;System.Web&quot; Path=&quot;~/Scripts/WebForms/WebUIValidation.js&quot; /&gt;
+            &lt;asp:ScriptReference Name=&quot;MenuStandards.js&quot; Assembly=&quot;System.Web&quot; Path=&quot;~/Scripts/WebForms/MenuStandards.js&quot; /&gt;
+            &lt;asp:ScriptReference Name=&quot;GridView.js&quot; Assembly=&quot;System.Web&quot; Path=&quot;~/Scripts/WebForms/GridView.js&quot; /&gt;
+            &lt;asp:ScriptReference Name=&quot;DetailsView.js&quot; Assembly=&quot;System.Web&quot; Path=&quot;~/Scripts/WebForms/DetailsView.js&quot; /&gt;
+            &lt;asp:ScriptReference Name=&quot;TreeView.js&quot; Assembly=&quot;System.Web&quot; Path=&quot;~/Scripts/WebForms/TreeView.js&quot; /&gt;
+            &lt;asp:ScriptReference Name=&quot;WebParts.js&quot; Assembly=&quot;System.Web&quot; Path=&quot;~/Scripts/WebForms/WebParts.js&quot; /&gt;
+            &lt;asp:ScriptReference Name=&quot;Focus.js&quot; Assembly=&quot;System.Web&quot; Path=&quot;~/Scripts/WebForms/Focus.js&quot; /&gt;
+            &lt;asp:ScriptReference Name=&quot;WebFormsBundle&quot; /&gt;
+            &lt;%--Site Scripts--%&gt;
+
+        &lt;/Scripts&gt;
+    &lt;/asp:ScriptManager&gt;
+    &lt;header&gt;
+        &lt;div class=&quot;content-wrapper&quot;&gt;
+            &lt;div class=&quot;float-left&quot;&gt;
+                &lt;p class=&quot;site-title&quot;&gt;
+                    &lt;a runat=&quot;server&quot; href=&quot;~/&quot;&gt;your logo here&lt;/a&gt;
+                &lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;float-right&quot;&gt;
+                &lt;section id=&quot;login&quot;&gt;
+                    &lt;asp:LoginView runat=&quot;server&quot; ViewStateMode=&quot;Disabled&quot;&gt;
+                        &lt;AnonymousTemplate&gt;
+                            &lt;ul&gt;
+                                &lt;li&gt;&lt;a id=&quot;registerLink&quot; runat=&quot;server&quot; href=&quot;~/Account/Register.aspx&quot;&gt;Register&lt;/a&gt;&lt;/li&gt;
+                                &lt;li&gt;&lt;a id=&quot;loginLink&quot; runat=&quot;server&quot; href=&quot;~/Account/Login.aspx&quot;&gt;Log in&lt;/a&gt;&lt;/li&gt;
+                            &lt;/ul&gt;
+                        &lt;/AnonymousTemplate&gt;
+                        &lt;LoggedInTemplate&gt;
+                            &lt;p&gt;
+                                Hello, &lt;a runat=&quot;server&quot; class=&quot;username&quot; href=&quot;~/Account/Manage.aspx&quot; title=&quot;Manage your account&quot;&gt;
+                                    &lt;asp:LoginName runat=&quot;server&quot; CssClass=&quot;username&quot; /&gt;&lt;/a&gt;!
+                                &lt;asp:LoginStatus runat=&quot;server&quot; LogoutAction=&quot;Redirect&quot; LogoutText=&quot;Log off&quot; LogoutPageUrl=&quot;~/&quot; /&gt;
+                            &lt;/p&gt;
+                        &lt;/LoggedInTemplate&gt;
+                    &lt;/asp:LoginView&gt;
+                &lt;/section&gt;
+                &lt;nav&gt;
+                    &lt;ul id=&quot;menu&quot;&gt;
+                        &lt;li&gt;&lt;a runat=&quot;server&quot; href=&quot;~/&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
+                        &lt;li&gt;&lt;a runat=&quot;server&quot; href=&quot;~/About.aspx&quot;&gt;About&lt;/a&gt;&lt;/li&gt;
+                        &lt;li&gt;&lt;a runat=&quot;server&quot; href=&quot;~/Contact.aspx&quot;&gt;Contact&lt;/a&gt;&lt;/li&gt;
+                    &lt;/ul&gt;
+                &lt;/nav&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/header&gt;
+    &lt;div id=&quot;body&quot;&gt;
+        &lt;asp:ContentPlaceHolder runat=&quot;server&quot; ID=&quot;FeaturedContent&quot; /&gt;
+        &lt;section class=&quot;content-wrapper main-content clear-fix&quot;&gt;
+            &lt;asp:ContentPlaceHolder runat=&quot;server&quot; ID=&quot;MainContent&quot; /&gt;
+        &lt;/section&gt;
+    &lt;/div&gt;
+    &lt;footer&gt;
+        &lt;div class=&quot;content-wrapper&quot;&gt;
+            &lt;div class=&quot;float-left&quot;&gt;
+                &lt;p&gt;&copy; &lt;%: DateTime.Now.Year %&gt; - My ASP.NET Application&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/footer&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
 						<aside class="notes">
-							In this talk, I'll focus on architectural, rather than implementation, patterns.
+							Master Pages
 						</aside>
 					</section>
 					<section>
-						<h2>Project Composition</h2>
-						<p class="fragment">Project references</p>
-						<p class="fragment">Assembly references</p>
-						<p class="fragment">NuGet packages</p>
+						<h2>HTML Composition in WebForms</h2>
+						<pre><code contenteditable>&lt;%@ Page Title=&quot;About&quot; Language=&quot;C#&quot; MasterPageFile=&quot;~/Site.Master&quot; AutoEventWireup=&quot;true&quot; CodeBehind=&quot;About.aspx.cs&quot; Inherits=&quot;WebForms.About&quot; %&gt;
 
+&lt;asp:Content runat=&quot;server&quot; ID=&quot;BodyContent&quot; ContentPlaceHolderID=&quot;MainContent&quot;&gt;
+    &lt;hgroup class=&quot;title&quot;&gt;
+        &lt;h1&gt;&lt;%: Title %&gt;.&lt;/h1&gt;
+        &lt;h2&gt;Your app description page.&lt;/h2&gt;
+    &lt;/hgroup&gt;
+
+    &lt;article&gt;
+        &lt;p&gt;
+            Use this area to provide additional information.
+        &lt;/p&gt;
+
+        &lt;p&gt;
+            Use this area to provide additional information.
+        &lt;/p&gt;
+
+        &lt;p&gt;
+            Use this area to provide additional information.
+        &lt;/p&gt;
+    &lt;/article&gt;
+
+    &lt;aside&gt;
+        &lt;h3&gt;Aside Title&lt;/h3&gt;
+        &lt;p&gt;
+            Use this area to provide additional information.
+        &lt;/p&gt;
+        &lt;ul&gt;
+            &lt;li&gt;&lt;a runat=&quot;server&quot; href=&quot;~/&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a runat=&quot;server&quot; href=&quot;~/About.aspx&quot;&gt;About&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a runat=&quot;server&quot; href=&quot;~/Contact.aspx&quot;&gt;Contact&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/aside&gt;
+&lt;/asp:Content&gt;</code></pre>
 						<aside class="notes">
-							What do I mean by "composition?" There are several ways to look at this term. For starters, you probably already use Project Composition when you build web applications, no matter which framework you currently use. By this I mean that you are likely to have a project for database access and possibly another for your domain in addition to your web project. This form of composition is somewhat unique to web programming because a given page or API call never directly talks to another page or API. Instead, they interact through URLs. Therefore, you can easily go nuts and create a project-per-page or project-per-controller if you really wanted. (I don't recommend this.)
+							Pages
+						</aside>
+					</section>
+					<section>
+						<h2>HTML Composition in WebForms</h2>
+						<pre><code contenteditable>&lt;%@ Control Language=&quot;C#&quot; AutoEventWireup=&quot;true&quot; CodeBehind=&quot;OpenAuthProviders.ascx.cs&quot; Inherits=&quot;WebForms.Account.OpenAuthProviders&quot; %&gt;
+
+&lt;fieldset class=&quot;open-auth-providers&quot;&gt;
+    &lt;legend&gt;Log in using another service&lt;/legend&gt;
+    
+    &lt;asp:ListView runat=&quot;server&quot; ID=&quot;providerDetails&quot; ItemType=&quot;Microsoft.AspNet.Membership.OpenAuth.ProviderDetails&quot;
+        SelectMethod=&quot;GetProviderNames&quot; ViewStateMode=&quot;Disabled&quot;&gt;
+        &lt;ItemTemplate&gt;
+            &lt;button type=&quot;submit&quot; name=&quot;provider&quot; value=&quot;&lt;%#: Item.ProviderName %&gt;&quot;
+                title=&quot;Log in using your &lt;%#: Item.ProviderDisplayName %&gt; account.&quot;&gt;
+                &lt;%#: Item.ProviderDisplayName %&gt;
+            &lt;/button&gt;
+        &lt;/ItemTemplate&gt;
+    
+        &lt;EmptyDataTemplate&gt;
+            &lt;div class=&quot;message-info&quot;&gt;
+                &lt;p&gt;There are no external authentication services configured. See &lt;a href=&quot;http://go.microsoft.com/fwlink/?LinkId=252803&quot;&gt;this article&lt;/a&gt; for details on setting up this ASP.NET application to support logging in via external services.&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/EmptyDataTemplate&gt;
+    &lt;/asp:ListView&gt;
+&lt;/fieldset&gt;</code></pre>
+						<aside class="notes">
+							Controls
 						</aside>
 					</section>
 				</section>
 
 				<section>
 					<section>
-						<h2>Composition in ASP.NET</h2>
-						<a class="image" href="http://www.hanselman.com/blog/OneASPNETSneakPeekElegantWebFormsAndSnowballsInHell.aspx">
-							<img src="img/one-asp-net.png" alt="One ASP.NET" />
-						</a>
+						<h2>HTML Composition with Razor</h2>
+						<pre><code contenteditable>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot; /&gt;
+        &lt;title&gt;@ViewBag.Title - Contact Manager&lt;/title&gt;
+        &lt;link href=&quot;~/favicon.ico&quot; rel=&quot;shortcut icon&quot; type=&quot;image/x-icon&quot; /&gt;
+        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot; /&gt;
+        @Styles.Render(&quot;~/Content/themes/base/css&quot;, &quot;~/Content/css&quot;)
+        @Scripts.Render(&quot;~/bundles/modernizr&quot;)
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;header&gt;
+            &lt;div class=&quot;content-wrapper&quot;&gt;
+                &lt;div class=&quot;float-left&quot;&gt;
+                    &lt;p class=&quot;site-title&quot;&gt;@Html.ActionLink(&quot;Contact Manager&quot;, &quot;Index&quot;, &quot;Home&quot;, new { area = &quot;&quot; }, null)&lt;/p&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;float-right&quot;&gt;
+                    &lt;section id=&quot;login&quot;&gt;
+                        @Html.Partial(&quot;_LoginPartial&quot;)
+                    &lt;/section&gt;
+                    &lt;nav&gt;
+                        &lt;ul id=&quot;menu&quot;&gt;
+                            &lt;li&gt;@Html.ActionLink(&quot;Home&quot;, &quot;Index&quot;, &quot;Home&quot;, new { area = &quot;&quot; }, null)&lt;/li&gt;
+                            &lt;li&gt;@Html.ActionLink(&quot;API&quot;, &quot;Index&quot;, &quot;Help&quot;, new { area = &quot;&quot; }, null)&lt;/li&gt;
+                        &lt;/ul&gt;
+                    &lt;/nav&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/header&gt;
+
+        &lt;div id=&quot;body&quot;&gt;
+            &lt;section class=&quot;content-wrapper main-content clear-fix&quot;&gt;
+                @RenderBody()
+            &lt;/section&gt;
+        &lt;/div&gt;
+
+        &lt;footer&gt;
+            &lt;div class=&quot;content-wrapper&quot;&gt;
+                &lt;div class=&quot;float-left&quot;&gt;
+                    &lt;p&gt;&copy; @DateTime.Now.Year - Contact Manager&lt;/p&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;float-right&quot;&gt;
+                    &lt;ul id=&quot;social&quot;&gt;
+                        &lt;li&gt;&lt;a href=&quot;http://facebook.com&quot; class=&quot;facebook&quot;&gt;Facebook&lt;/a&gt;&lt;/li&gt;
+                        &lt;li&gt;&lt;a href=&quot;http://twitter.com&quot; class=&quot;twitter&quot;&gt;Twitter&lt;/a&gt;&lt;/li&gt;
+                    &lt;/ul&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/footer&gt;
+
+        @Scripts.Render(&quot;~/bundles/jquery&quot;)
+        @RenderSection(&quot;scripts&quot;, required: false)
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
 					</section>
-					<section data-markdown>
-						## Composition in ASP.NET
-						1. HTML composition
-						1. File structure composition
-						1. Routing
-						1. ASP.NET event pipeline (modules and handlers)
+					<section>
+						<h2>Razor Views</h2>
+						<pre><code contenteditable>@{
+    ViewBag.Title = &quot;Home&quot;;
+}
+
+&lt;div id=&quot;container&quot;&gt;
+&lt;img id=&quot;loader&quot; src=&quot;images/ajax-loader.gif&quot; data-bind=&quot;visible: !loaded()&quot; /&gt;
+
+&lt;ul id=&quot;contacts&quot; data-bind=&quot;visible: loaded, foreach: contacts&quot;&gt;
+    &lt;li class=&quot;ui-widget-content ui-corner-all&quot;&gt;
+        &lt;h1 data-bind=&quot;text: Name&quot; class=&quot;ui-widget-header&quot;&gt;&lt;/h1&gt;
+        &lt;div&gt;&lt;span data-bind=&quot;text: Address || 'Address?'&quot;&gt;&lt;/span&gt;&lt;/div&gt;
+        &lt;div&gt;
+            &lt;span data-bind=&quot;text: City || 'City?'&quot;&gt;&lt;/span&gt;,
+            &lt;span data-bind=&quot;text: State || 'State?'&quot;&gt;&lt;/span&gt;
+            &lt;span data-bind=&quot;text: Zip || 'Zip?'&quot;&gt;&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+            &lt;a data-bind=&quot;visible: Email, text: Email, attr: { href: 'mailto:' + Email }&quot;&gt;&lt;/a&gt;
+            &lt;span data-bind=&quot;visible: !Email&quot;&gt;Email?&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+            &lt;a data-bind=&quot;visible: Twitter, text: '@@' + Twitter, attr: { href: 'http://twitter.com/' + Twitter }&quot;&gt;&lt;/a&gt;
+            &lt;span data-bind=&quot;visible: !$data.Twitter&quot;&gt;Twitter?&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;p&gt;&lt;a data-bind=&quot;attr: { href: Self + '.png'}&quot; class=&quot;viewImage ui-state-default ui-corner-all&quot; target=&quot;_blank&quot;&gt;Image&lt;/a&gt;
+           &lt;a href=&quot;#&quot; data-bind=&quot;click: $root.removeContact&quot; class=&quot;removeContact ui-state-default ui-corner-all&quot;&gt;Remove&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+@Html.Partial(&quot;AddContact&quot;)
+
+@section Scripts {
+    @Scripts.Render(&quot;~/bundles/knockout&quot;)
+    @Scripts.Render(&quot;~/bundles/jqueryval&quot;)
+    
+    &lt;script type=&quot;text/javascript&quot;&gt;
+        function ContactsViewModel() {
+            var self = this;
+            self.loaded = ko.observable(false);
+            self.contacts = ko.observableArray([]);
+
+            self.createContactFromForm = function (formElement) {
+                // If valid, post the serialized form data to the web api
+                $(formElement).validate();
+                if ($(formElement).valid()) {
+                    $.post(&quot;api/contacts&quot;, $(formElement).serialize(), &quot;json&quot;)
+                        .done(function (newContact) { self.contacts.push(newContact); });
+                }
+            }
+            self.removeContact = function (contact) {
+                // First remove from the server, then from the UI
+                $.ajax({ type: &quot;DELETE&quot;, url: contact.Self})
+                    .done(function () { self.contacts.remove(contact); });
+            }
+
+            // Load the initial state
+            $.getJSON(&quot;api/contacts&quot;, self.contacts)
+                .done(function () { self.loaded(true); });
+        }
+
+        ko.applyBindings(new ContactsViewModel());
+    &lt;/script&gt;
+}</code></pre>
 					</section>
-					<section data-markdown>
-						## HTML Composition in WebForms
-						1. Master pages
-						1. Pages
-						1. Controls
+					<section>
+						<h2>Razor Partials</h2>
+						<pre><code contenteditable>@model ContactManager.Models.Contact
+
+&lt;form id=&quot;addContact&quot; data-bind=&quot;submit: createContactFromForm&quot;&gt;
+    @Html.ValidationSummary(true)
+
+    &lt;fieldset&gt;
+        &lt;legend&gt;Contact&lt;/legend&gt;
+
+        @Html.EditorForModel()
+
+        &lt;p&gt;
+            &lt;input type=&quot;submit&quot; value=&quot;Save&quot; /&gt;
+        &lt;/p&gt;
+    &lt;/fieldset&gt;
+&lt;/form&gt;</code></pre>
 					</section>
+				</section>
+
+				<section>
 					<section data-markdown>
-						## HTML Composition in MVC and WebPages
-						1. Layouts
-						1. Pages
-						1. Partials
+						## File Composition
+						![File Composition in WebForms](img/file-composition-solution-explorer.png)
 					</section>
 					<section data-markdown>
 						## File Composition
-						1. WebForms .aspx
-						1. WebPages .cshtml
+						![About page mapped to file location of About.aspx](img/web-forms-about.png)
 					</section>
 					<section data-markdown>
-						## Composition via Routing
+						## File Composition
+						![Register page mapped to file location of Account/Register.aspx](img/web-forms-register.png)
+						<aside class="notes">
+							This is the same strategy employed in WebPages.
+						</aside>
 					</section>
-					<section data-markdown>
-						## Composition via the ASP.NET Event Pipeline
+				</section>
+
+				<section>
+					<h2>Composition via Routing</h2>
+					<pre><code contenteditable>public static void RegisterRoutes(RouteCollection routes)
+{
+    routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+    routes.MapPageRoute(
+        routeName: "Contact",
+        routeUrl: "contact",
+        physicalFile: "~/Contact.aspx",
+        checkPhysicalUrlAccess: true
+    );
+
+    routes.MapRoute(
+        name: "Default",
+        url: "{controller}/{action}/{id}",
+        defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+    );
+}</code></pre>
+
+					<aside class="notes">
+						Whereas file-based composition will resolve as the page is made available, routing takes a constraint-based approach.
+						You might think of the difference as black-list versus white-list.
+					</aside>
+				</section>
+
+				<section>
+					<section>
+						<h2>Composition via the ASP.NET Event Pipeline</h2>
+						<pre><code contenteditable>public interface IHttpHandler
+{
+    bool IsReusable { get; }
+    void ProcessRequest(HttpContext context);
+}
+
+public interface IHttpModule
+{
+    void Dispose();
+    void Init(HttpApplication context);
+}</code></pre>
+					</section>
+					<section>
+						<h2>Learn more</h2>
+						<iframe src="http://pluralsight.com/training/courses/TableOfContents?courseName=iis-extending" width="100%" height="100%"></iframe>
 					</section>
 				</section>
 
 				<section data-markdown>
 					## Composition in HTTP
-					1. URIs
+					1. URIs and Resources
 					1. Status codes
 					1. Headers
-					1. Resources
 					1. Representations (and content negotiation)
 					1. Intermediaries
 
@@ -141,37 +487,185 @@
 						Intermediaries are beyond the scope of this talk, though Web API can indeed be used to create intermediaries.
 					</aside>
 				</section>
-				<section data-markdown>
-					## URIs
+
+				<section>
+					<section>
+						<h2>URIs and Resources</h2>
+						<pre><code contenteditable>http://localhost:8081/api/contacts</code></pre>
+						<pre><code contenteditable>http://localhost:8081/api/contacts/1</code></pre>
+					</section>
+					<section>
+						<h2>Web API Controller &asymp; Resources</h2>
+						<pre><code contenteditable>namespace ContactManager.Controllers.Apis
+{
+    public class ContactsController : ApiController
+    {
+        [GET("Contacts")]
+        public IEnumerable<Contact> Get() { }
+        
+        [GET("Contacts/{id}")]
+        public Contact Get(int id) { }
+        
+        [POST("Contacts")]
+        public HttpResponseMessage Post(Contact contact) { }
+        
+        [PUT("Contacts/{id}")]
+        public Contact Put(int id, Contact contact) { }
+        
+        [DELETE("Contacts/{id}")]
+        public Contact Delete(int id) { }
+    }
+}</code></pre>
+						<aside class="notes">
+							First, in order to represent the routes, I'm showing this as it would appear with the AttributeRouting package.
+							Also, there is some debate as to whether or not this should be split into two controllers. The Contact Manager sample uses this approach.
+						</aside>
+					</section>
+					<section>
+						<h2>Web API Controller &asymp; Resource</h2>
+						<pre><code contenteditable>namespace ContactManager.Controllers.Apis
+{
+    [RoutePrefix("Contacts")]
+    public class ContactsController : ApiController
+    {
+        public IEnumerable<Contact> Get() { }
+        public HttpResponseMessage Post(Contact contact) { }
+    }
+
+    [RoutePrefix("Contacts/{id}")]
+    public class ContactController : ApiController
+    {
+        public Contact Get(int id) { }
+        public Contact Put(int id, Contact contact) { }
+        public Contact Delete(int id) { }
+    }
+}</code></pre>
+						<aside class="notes">
+							In a previous implementation, Contact Manager used two controllers. I personally prefer the two, as again, it makes resource separation more clear. AttributeRouting also allows you to specify a route at the controller level, so using two controllers would also allow you to set fewer attributes.
+							Finally, Web API conventionally matches method names to HTTP methods. This matching also works with a method name like GetContacts.
+						</aside>
+					</section>
 				</section>
-				<section data-markdown>
-					## Status Codes
+
+				<section>
+					<section>
+						<h2>Status Codes</h2>
+						<iframe src="http://httpstatus.es/" height="100%" width="100%"></iframe>
+					</section>
+					<section>
+						<h2>Status Codes</h2>
+						<pre><code contenteditable>abstract class Response
+{
+    HeadersCollection Headers { get; set; }
+    HttpContent Content { get; set; }
+}
+
+class Continue : Response { }
+class OK : Response { }
+class Created : Response { }
+class Accepted : Response { }
+class NoContent : Response { }
+class UnAuthorized : Response { }
+class NotFound : Response { }
+class MethodNotAllowed : Response { }
+class NotAcceptable : Response { }
+...
+</code></pre>
+					</section>
+					<section>
+						<h2>Status Codes</h2>
+						<pre><code contenteditable>if (response is Continue)
+{
+    var cont = response as Continue;
+    // ...
+}
+else if (response is OK)
+{
+    var ok = response as OK;
+    // ...
+}
+else if (response is Created)
+{
+    var created = response is Created;
+    // ...
+}
+else
+{
+    // fail horribly!
+}
+</code></pre>
+					</section>
 				</section>
+
 				<section data-markdown>
 					## Headers
 				</section>
-				<section data-markdown>
-					## Resources
+
+				<section>
+					<section data-markdown>
+						## Representations
+					</section>
+					<section data-markdown>
+						## Media Type Formatters
+					</section>
+					<section data-markdown>
+						## Content Negotiation (Conneg)
+					</section>
 				</section>
-				<section data-markdown>
-					## Representations
-				</section>
-				<section data-markdown>
-					## Media Type Formatters
-				</section>
-				<section data-markdown>
-					## Content Negotiation (Conneg)
-				</section>
+
 				<section>
 					<section data-markdown>
 						## Message Handlers
+						[WebApiContrib](http://github.com/WebApiContrib/WebAPIContrib/tree/master/src/WebApiContrib/MessageHandlers#slider)
+						<iframe src="http://github.com/WebApiContrib/WebAPIContrib/tree/master/src/WebApiContrib/MessageHandlers#slider" width="100%" height="100%"></iframe>
 
 						<aside class="notes">
 							Message Handlers are core of the Web API infrastructure. The controllers you use are effectively wrapped instances of message handlers that provide model binding and action selection, among other things, to your ApiController. Hosting is also built on top of the message handler interface. While these may at first appear to be no different than IHttpModule, you gain an advantage in that you still retain access to the statically-typed HttpRequestMessage and HttpResponseMessage types, and the helpers that allow you to more easily access the message body content.
 						</aside>
 					</section>
 					<section data-markdown>
+						## HEAD Message Handler
+						<pre><code contenteditable>public class HeadMessageHandler : DelegatingHandler
+{
+    protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+    {
+        if (request.Method == HttpMethod.Head) {
+            request.Method = HttpMethod.Get;
+            return base.SendAsync(request, cancellationToken)
+                .ContinueWith<HttpResponseMessage>(task => {
+                    var response = task.Result;
+                    response.RequestMessage.Method = HttpMethod.Head;
+                    response.Content = new HeadContent(response.Content);
+                    return task.Result;
+                });
+        }
+
+        return base.SendAsync(request, cancellationToken);
+    }
+}</code></pre>
+
+						<aside class="notes">
+							Perhaps the best examples of message handlers are those for logging and security. Dominick Baier of Thinktecture has written a series of posts on handling authentication and authorization using message handlers, and has also written several packages available on NuGet.
+						</aside>
+					</section>
+					<section data-markdown>
 						## [Thinktecture.IdentityModel](https://github.com/thinktecture/Thinktecture.IdentityModel.45)
+						<pre><code contenteditable>static void ConfigureApis(HttpConfiguration configuration)
+{
+    // authentication
+    var authConfig = AuthenticationConfig.CreateConfiguration();
+    authConfig.ClaimsAuthenticationManager = new ConsultantsClaimsTransformer();
+    configuration.MessageHandlers.Add(new AuthenticationHandler(authConfig));
+
+    // authorization
+    configuration.SetAuthorizationManager(new GlobalAuthorizationManager(DefaultPolicy.Deny));
+
+    // CORS
+    CorsConfig.RegisterGlobal(configuration);
+
+    // dependency resolver for authorization manager
+    configuration.DependencyResolver = new AuthorizationDependencyResolver();
+}</code></pre>
 
 						<aside class="notes">
 							Perhaps the best examples of message handlers are those for logging and security. Dominick Baier of Thinktecture has written a series of posts on handling authentication and authorization using message handlers, and has also written several packages available on NuGet.
@@ -179,13 +673,22 @@
 					</section>
 					<section data-markdown>
 						## Route-specific MessageHandlers
+						<pre><code contenteditable>config.Routes.MapHttpRoute(
+    name: "",
+    routeTemplate: "",
+    defaults: null,
+    constraints: null,
+    handler: null
+);</code></pre>
 
 						<aside class="notes">
 							Message handlers may not always apply to every API command in your project, so you can also specify a route-specific handler when you define your routes.
 						</aside>
 					</section>
 					<section data-markdown>
-						## [ApiRouter](https://github.com/darrelmiller/ApiRouter)
+						## ApiRouter
+						[github](https://raw.github.com/darrelmiller/ApiRouter/master/src/GitHubApi/GitHubApiRouter.cs)
+						<iframe src="https://raw.github.com/darrelmiller/ApiRouter/master/src/GitHubApi/GitHubApiRouter.cs" width="100%" height="100%"></iframe>
 
 						<aside class="notes">
 							While on the topic of routing, Darrel Miller created a message handler that provides a more declarative style of routing. In his sample, he demonstrates how he would use his ApiRouter to layout the github URI structure. While not useful to everyone, this hopefully demonstrates the power of message handlers much as the image formatter demonstrates the utility of media type formatters.
@@ -206,16 +709,11 @@
 						## Reusability with HttpClient
 						1. MediaTypeFormatters
 						1. HttpMessageHandlers
-						1. [WebPacks](http://www.bizcoder.com/index.php/2012/05/30/using-nuget-to-give-web-api-that-add-service-reference-experience/)
-					</section>
-					<section data-markdown>
-						## Deserializing with Shared Formatters
-					</section>
-					<section data-markdown>
-						## Logging on the Client
+						1. Web Packs
 					</section>
 					<section data-markdown>
 						## Web Packs
+						[github](http://www.bizcoder.com/index.php/2012/05/30/using-nuget-to-give-web-api-that-add-service-reference-experience/)
 					</section>
 				</section>
 
