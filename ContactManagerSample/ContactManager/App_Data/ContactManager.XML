@@ -4,150 +4,24 @@
         <name>ContactManager</name>
     </assembly>
     <members>
-        <member name="T:ContactManager.Areas.HelpPage.HelpPageSampleGenerator">
+        <member name="M:ContactManager.Areas.HelpPage.ApiDescriptionExtensions.GetFriendlyId(System.Web.Http.Description.ApiDescription)">
             <summary>
-            This class will generate the samples for the help page.
+            Generates an URI-friendly ID for the <see cref="T:System.Web.Http.Description.ApiDescription"/>. E.g. "Get-Values-id_name" instead of "GetValues/{id}?name={name}"
             </summary>
+            <param name="description">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The ID as a string.</returns>
         </member>
-        <member name="M:ContactManager.Areas.HelpPage.HelpPageSampleGenerator.#ctor">
+        <member name="T:ContactManager.Areas.HelpPage.HelpPageConfig">
             <summary>
-            Initializes a new instance of the <see cref="T:ContactManager.Areas.HelpPage.HelpPageSampleGenerator"/> class.
-            </summary>
-        </member>
-        <member name="M:ContactManager.Areas.HelpPage.HelpPageSampleGenerator.GetSampleRequests(System.Web.Http.Description.ApiDescription)">
-            <summary>
-            Gets the request body samples for a given <see cref="T:System.Web.Http.Description.ApiDescription"/>.
-            </summary>
-            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
-            <returns>The samples keyed by media type.</returns>
-        </member>
-        <member name="M:ContactManager.Areas.HelpPage.HelpPageSampleGenerator.GetSampleResponses(System.Web.Http.Description.ApiDescription)">
-            <summary>
-            Gets the response body samples for a given <see cref="T:System.Web.Http.Description.ApiDescription"/>.
-            </summary>
-            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
-            <returns>The samples keyed by media type.</returns>
-        </member>
-        <member name="M:ContactManager.Areas.HelpPage.HelpPageSampleGenerator.GetSample(System.Web.Http.Description.ApiDescription,ContactManager.Areas.HelpPage.SampleDirection)">
-            <summary>
-            Gets the request or response body samples.
-            </summary>
-            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
-            <param name="sampleDirection">The value indicating whether the sample is for a request or for a response.</param>
-            <returns>The samples keyed by media type.</returns>
-        </member>
-        <member name="M:ContactManager.Areas.HelpPage.HelpPageSampleGenerator.GetActionSample(System.String,System.String,System.Collections.Generic.IEnumerable{System.String},System.Type,System.Net.Http.Formatting.MediaTypeFormatter,System.Net.Http.Headers.MediaTypeHeaderValue,ContactManager.Areas.HelpPage.SampleDirection)">
-            <summary>
-            Search for samples that are provided directly through <see cref="P:ContactManager.Areas.HelpPage.HelpPageSampleGenerator.ActionSamples"/>.
-            </summary>
-            <param name="controllerName">Name of the controller.</param>
-            <param name="actionName">Name of the action.</param>
-            <param name="parameterNames">The parameter names.</param>
-            <param name="type">The CLR type.</param>
-            <param name="formatter">The formatter.</param>
-            <param name="mediaType">The media type.</param>
-            <param name="sampleDirection">The value indicating whether the sample is for a request or for a response.</param>
-            <returns>The sample that matches the parameters.</returns>
-        </member>
-        <member name="M:ContactManager.Areas.HelpPage.HelpPageSampleGenerator.GetSampleObject(System.Type)">
-            <summary>
-            Gets the sample object that will be serialized by the formatters. 
-            First, it will look at the <see cref="P:ContactManager.Areas.HelpPage.HelpPageSampleGenerator.SampleObjects"/>. If no sample object is found, it will try to create one using <see cref="T:ContactManager.Areas.HelpPage.ObjectGenerator"/>.
-            </summary>
-            <param name="type">The type.</param>
-            <returns>The sample object.</returns>
-        </member>
-        <member name="M:ContactManager.Areas.HelpPage.HelpPageSampleGenerator.ResolveType(System.Web.Http.Description.ApiDescription,System.String,System.String,System.Collections.Generic.IEnumerable{System.String},ContactManager.Areas.HelpPage.SampleDirection,System.Collections.ObjectModel.Collection{System.Net.Http.Formatting.MediaTypeFormatter}@)">
-            <summary>
-            Resolves the type of the action parameter or return value when <see cref="T:System.Net.Http.HttpRequestMessage"/> or <see cref="T:System.Net.Http.HttpResponseMessage"/> is used.
-            </summary>
-            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
-            <param name="controllerName">Name of the controller.</param>
-            <param name="actionName">Name of the action.</param>
-            <param name="parameterNames">The parameter names.</param>
-            <param name="sampleDirection">The value indicating whether the sample is for a request or a response.</param>
-            <param name="formatters">The formatters.</param>
-        </member>
-        <member name="M:ContactManager.Areas.HelpPage.HelpPageSampleGenerator.WriteSampleObjectUsingFormatter(System.Net.Http.Formatting.MediaTypeFormatter,System.Object,System.Type,System.Net.Http.Headers.MediaTypeHeaderValue)">
-            <summary>
-            Writes the sample object using formatter.
-            </summary>
-            <param name="formatter">The formatter.</param>
-            <param name="value">The value.</param>
-            <param name="type">The type.</param>
-            <param name="mediaType">Type of the media.</param>
-            <returns></returns>
-        </member>
-        <member name="P:ContactManager.Areas.HelpPage.HelpPageSampleGenerator.ActualHttpMessageTypes">
-            <summary>
-            Gets CLR types that are used as the content of <see cref="T:System.Net.Http.HttpRequestMessage"/> or <see cref="T:System.Net.Http.HttpResponseMessage"/>.
-            </summary>
-        </member>
-        <member name="P:ContactManager.Areas.HelpPage.HelpPageSampleGenerator.ActionSamples">
-            <summary>
-            Gets the objects that are used directly as samples for certain actions.
-            </summary>
-        </member>
-        <member name="P:ContactManager.Areas.HelpPage.HelpPageSampleGenerator.SampleObjects">
-            <summary>
-            Gets the objects that are serialized as samples by the supported formatters.
-            </summary>
-        </member>
-        <member name="M:ContactManager.Controllers.Apis.ContactsController.Get">
-            <summary>
-            Get all contacts.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:ContactManager.Controllers.Apis.ContactsController.Get(System.Int32)">
-            <summary>
-            Get contact by ID.
-            </summary>
-            <param name="id">Contact ID</param>
-            <returns>The contact with the specified ID</returns>
-        </member>
-        <member name="M:ContactManager.Controllers.Apis.ContactsController.Post(ContactManager.Models.Contact)">
-            <summary>
-            Add a new contact.
-            </summary>
-            <param name="contact">Contact to add.</param>
-            <returns>The added contact</returns>
-        </member>
-        <member name="M:ContactManager.Controllers.Apis.ContactsController.Put(System.Int32,ContactManager.Models.Contact)">
-            <summary>
-            Update an existing contact.
-            </summary>
-            <param name="id">Contact ID.</param>
-            <param name="contact">Contact update.</param>
-            <returns>the updated contact.</returns>
-        </member>
-        <member name="M:ContactManager.Controllers.Apis.ContactsController.Delete(System.Int32)">
-            <summary>
-            Delete a contact.
-            </summary>
-            <param name="id">Contact ID.</param>
-            <returns>The deleted contact.</returns>
-        </member>
-        <member name="T:ContactManager.Areas.HelpPage.InvalidSample">
-            <summary>
-            This represents an invalid sample on the help page. There's a display template named InvalidSample associated with this class.
+            Use this class to customize the Help Page.
+            For example you can set a custom <see cref="T:System.Web.Http.Description.IDocumentationProvider"/> to supply the documentation
+            or you can provide the samples for the requests/responses.
             </summary>
         </member>
         <member name="T:ContactManager.Areas.HelpPage.Controllers.HelpController">
             <summary>
             The controller that will handle requests for the help page.
             </summary>
-        </member>
-        <member name="T:ContactManager.Areas.HelpPage.XmlDocumentationProvider">
-            <summary>
-            A custom <see cref="T:System.Web.Http.Description.IDocumentationProvider"/> that reads the API documentation from an XML documentation file.
-            </summary>
-        </member>
-        <member name="M:ContactManager.Areas.HelpPage.XmlDocumentationProvider.#ctor(System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:ContactManager.Areas.HelpPage.XmlDocumentationProvider"/> class.
-            </summary>
-            <param name="documentPath">The physical path to XML document.</param>
         </member>
         <member name="M:ContactManager.Areas.HelpPage.HelpPageConfigurationExtensions.SetDocumentationProvider(System.Web.Http.HttpConfiguration,System.Web.Http.Description.IDocumentationProvider)">
             <summary>
@@ -280,18 +154,123 @@
             An <see cref="T:ContactManager.Areas.HelpPage.Models.HelpPageApiModel"/>
             </returns>
         </member>
-        <member name="M:ContactManager.Areas.HelpPage.ApiDescriptionExtensions.GetFriendlyId(System.Web.Http.Description.ApiDescription)">
+        <member name="T:ContactManager.Areas.HelpPage.Models.HelpPageApiModel">
             <summary>
-            Generates an URI-friendly ID for the <see cref="T:System.Web.Http.Description.ApiDescription"/>. E.g. "Get-Values-id_name" instead of "GetValues/{id}?name={name}"
+            The model that represents an API displayed on the help page.
             </summary>
-            <param name="description">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
-            <returns>The ID as a string.</returns>
         </member>
-        <member name="T:ContactManager.Areas.HelpPage.HelpPageConfig">
+        <member name="M:ContactManager.Areas.HelpPage.Models.HelpPageApiModel.#ctor">
             <summary>
-            Use this class to customize the Help Page.
-            For example you can set a custom <see cref="T:System.Web.Http.Description.IDocumentationProvider"/> to supply the documentation
-            or you can provide the samples for the requests/responses.
+            Initializes a new instance of the <see cref="T:ContactManager.Areas.HelpPage.Models.HelpPageApiModel"/> class.
+            </summary>
+        </member>
+        <member name="P:ContactManager.Areas.HelpPage.Models.HelpPageApiModel.ApiDescription">
+            <summary>
+            Gets or sets the <see cref="P:ContactManager.Areas.HelpPage.Models.HelpPageApiModel.ApiDescription"/> that describes the API.
+            </summary>
+        </member>
+        <member name="P:ContactManager.Areas.HelpPage.Models.HelpPageApiModel.SampleRequests">
+            <summary>
+            Gets the sample requests associated with the API.
+            </summary>
+        </member>
+        <member name="P:ContactManager.Areas.HelpPage.Models.HelpPageApiModel.SampleResponses">
+            <summary>
+            Gets the sample responses associated with the API.
+            </summary>
+        </member>
+        <member name="P:ContactManager.Areas.HelpPage.Models.HelpPageApiModel.ErrorMessages">
+            <summary>
+            Gets the error messages associated with this model.
+            </summary>
+        </member>
+        <member name="T:ContactManager.Areas.HelpPage.HelpPageSampleGenerator">
+            <summary>
+            This class will generate the samples for the help page.
+            </summary>
+        </member>
+        <member name="M:ContactManager.Areas.HelpPage.HelpPageSampleGenerator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ContactManager.Areas.HelpPage.HelpPageSampleGenerator"/> class.
+            </summary>
+        </member>
+        <member name="M:ContactManager.Areas.HelpPage.HelpPageSampleGenerator.GetSampleRequests(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Gets the request body samples for a given <see cref="T:System.Web.Http.Description.ApiDescription"/>.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:ContactManager.Areas.HelpPage.HelpPageSampleGenerator.GetSampleResponses(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Gets the response body samples for a given <see cref="T:System.Web.Http.Description.ApiDescription"/>.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:ContactManager.Areas.HelpPage.HelpPageSampleGenerator.GetSample(System.Web.Http.Description.ApiDescription,ContactManager.Areas.HelpPage.SampleDirection)">
+            <summary>
+            Gets the request or response body samples.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or for a response.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:ContactManager.Areas.HelpPage.HelpPageSampleGenerator.GetActionSample(System.String,System.String,System.Collections.Generic.IEnumerable{System.String},System.Type,System.Net.Http.Formatting.MediaTypeFormatter,System.Net.Http.Headers.MediaTypeHeaderValue,ContactManager.Areas.HelpPage.SampleDirection)">
+            <summary>
+            Search for samples that are provided directly through <see cref="P:ContactManager.Areas.HelpPage.HelpPageSampleGenerator.ActionSamples"/>.
+            </summary>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+            <param name="type">The CLR type.</param>
+            <param name="formatter">The formatter.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or for a response.</param>
+            <returns>The sample that matches the parameters.</returns>
+        </member>
+        <member name="M:ContactManager.Areas.HelpPage.HelpPageSampleGenerator.GetSampleObject(System.Type)">
+            <summary>
+            Gets the sample object that will be serialized by the formatters. 
+            First, it will look at the <see cref="P:ContactManager.Areas.HelpPage.HelpPageSampleGenerator.SampleObjects"/>. If no sample object is found, it will try to create one using <see cref="T:ContactManager.Areas.HelpPage.ObjectGenerator"/>.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>The sample object.</returns>
+        </member>
+        <member name="M:ContactManager.Areas.HelpPage.HelpPageSampleGenerator.ResolveType(System.Web.Http.Description.ApiDescription,System.String,System.String,System.Collections.Generic.IEnumerable{System.String},ContactManager.Areas.HelpPage.SampleDirection,System.Collections.ObjectModel.Collection{System.Net.Http.Formatting.MediaTypeFormatter}@)">
+            <summary>
+            Resolves the type of the action parameter or return value when <see cref="T:System.Net.Http.HttpRequestMessage"/> or <see cref="T:System.Net.Http.HttpResponseMessage"/> is used.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or a response.</param>
+            <param name="formatters">The formatters.</param>
+        </member>
+        <member name="M:ContactManager.Areas.HelpPage.HelpPageSampleGenerator.WriteSampleObjectUsingFormatter(System.Net.Http.Formatting.MediaTypeFormatter,System.Object,System.Type,System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Writes the sample object using formatter.
+            </summary>
+            <param name="formatter">The formatter.</param>
+            <param name="value">The value.</param>
+            <param name="type">The type.</param>
+            <param name="mediaType">Type of the media.</param>
+            <returns></returns>
+        </member>
+        <member name="P:ContactManager.Areas.HelpPage.HelpPageSampleGenerator.ActualHttpMessageTypes">
+            <summary>
+            Gets CLR types that are used as the content of <see cref="T:System.Net.Http.HttpRequestMessage"/> or <see cref="T:System.Net.Http.HttpResponseMessage"/>.
+            </summary>
+        </member>
+        <member name="P:ContactManager.Areas.HelpPage.HelpPageSampleGenerator.ActionSamples">
+            <summary>
+            Gets the objects that are used directly as samples for certain actions.
+            </summary>
+        </member>
+        <member name="P:ContactManager.Areas.HelpPage.HelpPageSampleGenerator.SampleObjects">
+            <summary>
+            Gets the objects that are serialized as samples by the supported formatters.
             </summary>
         </member>
         <member name="T:ContactManager.Areas.HelpPage.HelpPageSampleKey">
@@ -370,14 +349,9 @@
             </summary>
             <param name="src">The URL of an image.</param>
         </member>
-        <member name="T:ContactManager.Areas.HelpPage.SampleDirection">
+        <member name="T:ContactManager.Areas.HelpPage.InvalidSample">
             <summary>
-            Indicates whether the sample is used for request or response
-            </summary>
-        </member>
-        <member name="T:ContactManager.Areas.HelpPage.TextSample">
-            <summary>
-            This represents a preformatted text sample on the help page. There's a display template named TextSample associated with this class.
+            This represents an invalid sample on the help page. There's a display template named InvalidSample associated with this class.
             </summary>
         </member>
         <member name="T:ContactManager.Areas.HelpPage.ObjectGenerator">
@@ -401,35 +375,61 @@
             <param name="type">The type.</param>
             <returns>An object of the given type.</returns>
         </member>
-        <member name="T:ContactManager.Areas.HelpPage.Models.HelpPageApiModel">
+        <member name="T:ContactManager.Areas.HelpPage.SampleDirection">
             <summary>
-            The model that represents an API displayed on the help page.
+            Indicates whether the sample is used for request or response
             </summary>
         </member>
-        <member name="M:ContactManager.Areas.HelpPage.Models.HelpPageApiModel.#ctor">
+        <member name="T:ContactManager.Areas.HelpPage.TextSample">
             <summary>
-            Initializes a new instance of the <see cref="T:ContactManager.Areas.HelpPage.Models.HelpPageApiModel"/> class.
+            This represents a preformatted text sample on the help page. There's a display template named TextSample associated with this class.
             </summary>
         </member>
-        <member name="P:ContactManager.Areas.HelpPage.Models.HelpPageApiModel.ApiDescription">
+        <member name="T:ContactManager.Areas.HelpPage.XmlDocumentationProvider">
             <summary>
-            Gets or sets the <see cref="P:ContactManager.Areas.HelpPage.Models.HelpPageApiModel.ApiDescription"/> that describes the API.
+            A custom <see cref="T:System.Web.Http.Description.IDocumentationProvider"/> that reads the API documentation from an XML documentation file.
             </summary>
         </member>
-        <member name="P:ContactManager.Areas.HelpPage.Models.HelpPageApiModel.SampleRequests">
+        <member name="M:ContactManager.Areas.HelpPage.XmlDocumentationProvider.#ctor(System.String)">
             <summary>
-            Gets the sample requests associated with the API.
+            Initializes a new instance of the <see cref="T:ContactManager.Areas.HelpPage.XmlDocumentationProvider"/> class.
             </summary>
+            <param name="documentPath">The physical path to XML document.</param>
         </member>
-        <member name="P:ContactManager.Areas.HelpPage.Models.HelpPageApiModel.SampleResponses">
+        <member name="M:ContactManager.Controllers.Apis.ContactsController.Get">
             <summary>
-            Gets the sample responses associated with the API.
+            Get all contacts.
             </summary>
+            <returns></returns>
         </member>
-        <member name="P:ContactManager.Areas.HelpPage.Models.HelpPageApiModel.ErrorMessages">
+        <member name="M:ContactManager.Controllers.Apis.ContactsController.Get(System.Int32)">
             <summary>
-            Gets the error messages associated with this model.
+            Get contact by ID.
             </summary>
+            <param name="id">Contact ID</param>
+            <returns>The contact with the specified ID</returns>
+        </member>
+        <member name="M:ContactManager.Controllers.Apis.ContactsController.Post(ContactManager.Models.Contact)">
+            <summary>
+            Add a new contact.
+            </summary>
+            <param name="contact">Contact to add.</param>
+            <returns>The added contact</returns>
+        </member>
+        <member name="M:ContactManager.Controllers.Apis.ContactsController.Put(System.Int32,ContactManager.Models.Contact)">
+            <summary>
+            Update an existing contact.
+            </summary>
+            <param name="id">Contact ID.</param>
+            <param name="contact">Contact update.</param>
+            <returns>the updated contact.</returns>
+        </member>
+        <member name="M:ContactManager.Controllers.Apis.ContactsController.Delete(System.Int32)">
+            <summary>
+            Delete a contact.
+            </summary>
+            <param name="id">Contact ID.</param>
+            <returns>The deleted contact.</returns>
         </member>
     </members>
 </doc>
