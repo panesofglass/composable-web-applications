@@ -551,6 +551,10 @@ public interface IHttpModule
 					<section>
 						<h2>Status Codes</h2>
 						<iframe src="http://httpstatus.es/" height="100%" width="100%"></iframe>
+
+						<aside class="notes">
+							Status codes are a communication mechanism. You can't do much in terms of composition, but you can direct client/server composition.
+						</aside>
 					</section>
 					<section>
 						<h2>Status Codes</h2>
@@ -599,17 +603,69 @@ else
 
 				<section data-markdown>
 					## Headers
+					Direct the composition taken by the client and/or server
+					Examples:
+					* Accept
+					* Cache-Control
+					* Location
+
+					<aside class="notes">
+						Like status codes, headers are a means of directing composition but don't directly provide a composition mechanism.
+					</aside>
 				</section>
 
 				<section>
 					<section data-markdown>
-						## Representations
+						<h2>Representations</h2>
+						<pre><code contenteditable>{
+    "ContactId":1,
+    "Name":"Glenn Block",
+    "Address":"1 Microsoft Way",
+    "City":"Redmond",
+    "State":"WA",
+    "Zip":"98052",
+    "Email":"gblock@microsoft.com",
+    "Twitter":"gblock",
+    "Self":"/api/contacts/1"
+}</code></pre>
+					</section>
+					<section data-markdown>
+						<h2>And XML!</h2>
+						<pre><code contenteditable><Contact xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/ContactManager.Models">
+    <Address>1 Microsoft Way</Address>
+    <City>Redmond</City>
+    <ContactId>1</ContactId>
+    <Email>gblock@microsoft.com</Email>
+    <Name>Glenn Block</Name>
+    <Self>/api/contacts/1</Self>
+    <State>WA</State>
+    <Twitter>gblock</Twitter>
+    <Zip>98052</Zip>
+</Contact></code></pre>
+					</section>
+					<section data-markdown>
+						## Why not an image?
+						![PngFormatter](img/web-api-png-formatter.png)
 					</section>
 					<section data-markdown>
 						## Media Type Formatters
+						[ContactPngFormatter](http://code.msdn.microsoft.com/wpapps/Contact-Manager-Web-API-0e8e373d/sourcecode?fileId=64822&pathId=1345576334)
+						[VCardFormatter](http://code.msdn.microsoft.com/wpapps/Contact-Manager-Web-API-0e8e373d/sourcecode?fileId=64822&pathId=2078864820)
+					</section>
+					<section>
+						<h2>Content Negotiation</h2>
+						<pre><code contenteditable>var response = Request.CreateResponse(HttpStatusCode.OK, value, formatter, mediaType);</code></pre>
+						<pre><code contenteditable>var content = new ObjectContent<Contact>(contact, formatter, mediaType);</code></pre>
+
+						<aside class="notes">
+							The ContentNegotiator essentially wraps the result value and produces an output that satisfies both the available formatters and requested format.
+						</aside>
 					</section>
 					<section data-markdown>
-						## Content Negotiation (Conneg)
+						## Representation Composition
+						* Piece together HTML
+						* Map domain entities into a serializable entity
+						* Insert link relations
 					</section>
 				</section>
 
@@ -732,6 +788,12 @@ else
 				</section>
 
 				<section data-markdown>
+					## What's Next?
+					[Single Page Applications](http://pluralsight.com/training/Courses/TableOfContents/spa)
+					[Composition in the Small](#/24)
+				</section>
+
+				<section data-markdown>
 					## Don't Miss Part 2
 					### Composition in the Small
 					(or "F# for C# Developers")
@@ -764,9 +826,7 @@ else
 
 		<script src="lib/js/head.min.js"></script>
 		<script src="js/reveal.min.js"></script>
-
 		<script>
-			
 			// Full list of configuration options available here:
 			// https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize({
@@ -787,8 +847,6 @@ else
 					{ src: 'plugin/speakernotes/client.js', async: true, condition: function() { return window.location.host === 'localhost:1947'; } },
 				]
 			});
-			
 		</script>
-
 	</body>
 </html>
