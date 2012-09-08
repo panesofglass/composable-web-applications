@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
 using ContactManager.Controllers.Apis;
@@ -58,6 +59,21 @@ namespace ContactManager.Tests.Controllers
             int id = 1;
             controller.Delete(id);
             Assert.IsNull(repository.Get(id));
+        }
+
+        [TestMethod]
+        public void GetContactsWithHttpClient()
+        {
+            var config = new HttpConfiguration();
+            WebApiConfig.Register(config);
+            using (var server = new HttpServer(config))
+            using (var client = new HttpClient(server))
+            {
+                // NOTE: Don't use .Result in real applications!!!
+                var response = client.GetAsync("http://idontknowyou.org/api/contacts").Result;
+                var contacts = response.Content.ReadAsAsync<IEnumerable<Contact>>().Result;
+                Assert.IsTrue(contacts.Any());
+            }
         }
     }
 }
