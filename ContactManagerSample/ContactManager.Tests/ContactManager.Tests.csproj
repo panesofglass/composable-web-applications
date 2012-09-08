@@ -114,6 +114,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ContactManager.Data\ContactManager.Data.csproj">
+      <Project>{8fc57059-4911-48d9-8374-3670f91f1511}</Project>
+      <Name>ContactManager.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ContactManager.Model\ContactManager.Model.csproj">
+      <Project>{4419f17c-a4d3-4c45-9787-fa3f935f258a}</Project>
+      <Name>ContactManager.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ContactManager\ContactManager.csproj">
       <Project>{7777FD27-3538-491C-B3EF-C4DD80F38886}</Project>
       <Name>ContactManager</Name>

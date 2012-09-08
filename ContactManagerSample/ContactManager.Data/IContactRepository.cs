@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Web.Security;
+﻿using System.Linq;
 
 namespace ContactManager.Models
 {

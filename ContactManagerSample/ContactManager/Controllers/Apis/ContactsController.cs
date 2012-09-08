@@ -1,11 +1,10 @@
-﻿using ContactManager.Filters;
-using ContactManager.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using ContactManager.Filters;
+using ContactManager.Models;
 
 namespace ContactManager.Controllers.Apis
 {

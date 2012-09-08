@@ -1,10 +1,10 @@
-﻿using ContactManager.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
+using ContactManager.Models;
 
 namespace ContactManager.Formatters
 {

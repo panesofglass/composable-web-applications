@@ -1,16 +1,10 @@
-﻿using ContactManager.Controllers.Apis;
+﻿using System.Linq;
+using System.Net.Http;
+using System.Web.Http;
+using ContactManager.Controllers.Apis;
 using ContactManager.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninject;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Formatting;
-using System.Text;
-using System.Web.Http;
-using System.Web.Http.Controllers;
-using System.Web.Http.Hosting;
 
 namespace ContactManager.Tests.Controllers
 {
@@ -22,7 +16,7 @@ namespace ContactManager.Tests.Controllers
         {
             var controller = new ContactsController(new SampleContactRepository());
             var contacts = controller.Get();
-            Assert.IsTrue(contacts.Count() > 0);
+            Assert.IsTrue(contacts.Any());
         }
 
         [TestMethod]

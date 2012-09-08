@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace ContactManager.Models
+﻿namespace ContactManager.Models
 {
     public static class SampleData
     {
