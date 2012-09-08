@@ -631,17 +631,17 @@ else
 					</section>
 					<section data-markdown>
 						<h2>And XML!</h2>
-						<pre><code contenteditable><Contact xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/ContactManager.Models">
-    <Address>1 Microsoft Way</Address>
-    <City>Redmond</City>
-    <ContactId>1</ContactId>
-    <Email>gblock@microsoft.com</Email>
-    <Name>Glenn Block</Name>
-    <Self>/api/contacts/1</Self>
-    <State>WA</State>
-    <Twitter>gblock</Twitter>
-    <Zip>98052</Zip>
-</Contact></code></pre>
+						<pre><code contenteditable>&lt;Contact xmlns:i=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns=&quot;http://schemas.datacontract.org/2004/07/ContactManager.Models&quot;&gt;
+    &lt;Address&gt;1 Microsoft Way&lt;/Address&gt;
+    &lt;City&gt;Redmond&lt;/City&gt;
+    &lt;ContactId&gt;1&lt;/ContactId&gt;
+    &lt;Email&gt;gblock@microsoft.com&lt;/Email&gt;
+    &lt;Name&gt;Glenn Block&lt;/Name&gt;
+    &lt;Self&gt;/api/contacts/1&lt;/Self&gt;
+    &lt;State&gt;WA&lt;/State&gt;
+    &lt;Twitter&gt;gblock&lt;/Twitter&gt;
+    &lt;Zip&gt;98052&lt;/Zip&gt;
+&lt;/Contact&gt;</code></pre>
 					</section>
 					<section data-markdown>
 						## Why not an image?
@@ -649,8 +649,8 @@ else
 					</section>
 					<section data-markdown>
 						## Media Type Formatters
-						[ContactPngFormatter](http://code.msdn.microsoft.com/wpapps/Contact-Manager-Web-API-0e8e373d/sourcecode?fileId=64822&pathId=1345576334)
-						[VCardFormatter](http://code.msdn.microsoft.com/wpapps/Contact-Manager-Web-API-0e8e373d/sourcecode?fileId=64822&pathId=2078864820)
+						* [ContactPngFormatter](http://code.msdn.microsoft.com/wpapps/Contact-Manager-Web-API-0e8e373d/sourcecode?fileId=64822&pathId=1345576334)
+						* [VCardFormatter](http://code.msdn.microsoft.com/wpapps/Contact-Manager-Web-API-0e8e373d/sourcecode?fileId=64822&pathId=2078864820)
 					</section>
 					<section>
 						<h2>Content Negotiation</h2>
