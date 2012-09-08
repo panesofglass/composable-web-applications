@@ -66,9 +66,6 @@
 
 				<section>
 					<h2>What is Composition?</h2>
-					<div class="image">
-						<img class="placeholder" src="img/legos.jpg" alt="LEGO Blocks" />
-					</div>
 
 					<aside class="notes">
 						In this talk, I'll focus on architectural, rather than implementation, patterns.
@@ -470,7 +467,7 @@ public interface IHttpModule
 					</section>
 					<section>
 						<h2>Learn more</h2>
-						<iframe src="http://pluralsight.com/training/courses/TableOfContents?courseName=iis-extending" width="100%" height="100%"></iframe>
+						<a href="http://pluralsight.com/training/courses/TableOfContents?courseName=iis-extending"><img src="img/iis.png" /></a>
 					</section>
 				</section>
 
@@ -549,7 +546,7 @@ public interface IHttpModule
 				<section>
 					<section>
 						<h2>Status Codes</h2>
-						<iframe src="http://httpstatus.es/" height="100%" width="100%"></iframe>
+						<a href="http://httpstatus.es/"><img src="img/httpstatus.png" /></a>
 
 						<aside class="notes">
 							Status codes are a communication mechanism. You can't do much in terms of composition, but you can direct client/server composition.
@@ -618,15 +615,15 @@ else
 					<section data-markdown>
 						<h2>Representations</h2>
 						<pre><code contenteditable>{
-    "ContactId":1,
-    "Name":"Glenn Block",
-    "Address":"1 Microsoft Way",
-    "City":"Redmond",
-    "State":"WA",
-    "Zip":"98052",
-    "Email":"gblock@microsoft.com",
-    "Twitter":"gblock",
-    "Self":"/api/contacts/1"
+    &quot;ContactId&quot;:1,
+    &quot;Name&quot;:&quot;Glenn Block&quot;,
+    &quot;Address&quot;:&quot;1 Microsoft Way&quot;,
+    &quot;City&quot;:&quot;Redmond&quot;,
+    &quot;State&quot;:&quot;WA&quot;,
+    &quot;Zip&quot;:&quot;98052&quot;,
+    &quot;Email&quot;:&quot;gblock@microsoft.com&quot;,
+    &quot;Twitter&quot;:&quot;gblock&quot;,
+    &quot;Self&quot;:&quot;/api/contacts/1&quot;
 }</code></pre>
 					</section>
 					<section data-markdown>
@@ -673,7 +670,7 @@ else
 					<section data-markdown>
 						## Message Handlers
 						[WebApiContrib](http://github.com/WebApiContrib/WebAPIContrib/tree/master/src/WebApiContrib/MessageHandlers#slider)
-						<iframe src="http://github.com/WebApiContrib/WebAPIContrib/tree/master/src/WebApiContrib/MessageHandlers#slider" width="100%" height="100%"></iframe>
+						<a href="http://github.com/WebApiContrib/WebAPIContrib/tree/master/src/WebApiContrib/MessageHandlers#slider"><img src="img/message-handlers.png" /></a>
 
 						<aside class="notes">
 							Message Handlers are core of the Web API infrastructure. The controllers you use are effectively wrapped instances of message handlers that provide model binding and action selection, among other things, to your ApiController. Hosting is also built on top of the message handler interface. While these may at first appear to be no different than IHttpModule, you gain an advantage in that you still retain access to the statically-typed HttpRequestMessage and HttpResponseMessage types, and the helpers that allow you to more easily access the message body content.
@@ -744,7 +741,20 @@ else
 					<section data-markdown>
 						## ApiRouter
 						[github](https://raw.github.com/darrelmiller/ApiRouter/master/src/GitHubApi/GitHubApiRouter.cs)
-						<iframe src="https://raw.github.com/darrelmiller/ApiRouter/master/src/GitHubApi/GitHubApiRouter.cs" width="100%" height="100%"></iframe>
+
+						<pre><code contenteditable>
+To&lt;RootController&gt;();
+Add("issues", ri=&gt; ri.To&lt;IssuesController&gt;());
+Add("events", ri =&gt; ri.To&lt;EventsController&gt;());
+Add("networks", rn =&gt; rn.Add("{userid}", ru =&gt; ru.Add("{repoid}", rr =&gt; rr.To&lt;NetworksController&gt;())));
+Add("gists",rg =&gt; rg.To&lt;GistsController&gt;()
+        .Add("public",rp =&gt; rp.To&lt;GistsController&gt;(new { gistfilter = "public" }))
+        .Add("starred", rs =&gt; rs.To&lt;GistsController&gt;(new { gistfilter = "starred" }))
+        .Add("{gistid}", rgi =&gt; rgi.To&lt;GistController&gt;("justid")
+             .Add("comments", rc =&gt; rc.To&lt;GistCommentsController&gt;())
+             .Add("star", rs=&gt; rs.To&lt;GistController&gt;(new { action = "Star" }, "star"))
+             .Add("fork", rf =&gt; rf.To&lt;GistController&gt;(new { action = "Fork" }, "fork"))
+    ));</code></pre>
 
 						<aside class="notes">
 							While on the topic of routing, Darrel Miller created a message handler that provides a more declarative style of routing. In his sample, he demonstrates how he would use his ApiRouter to layout the github URI structure. While not useful to everyone, this hopefully demonstrates the power of message handlers much as the image formatter demonstrates the utility of media type formatters.
@@ -765,7 +775,7 @@ else
 					</section>
 					<section data-markdown>
 						## Web Packs
-						[github](http://www.bizcoder.com/index.php/2012/05/30/using-nuget-to-give-web-api-that-add-service-reference-experience/)
+						[Darrel Miller's article](http://www.bizcoder.com/index.php/2012/05/30/using-nuget-to-give-web-api-that-add-service-reference-experience/)
 					</section>
 				</section>
 
@@ -785,10 +795,10 @@ else
 
 				<section data-markdown>
 					## What's Next?
-					
-					[Single Page Applications](http://pluralsight.com/training/Courses/TableOfContents/spa)
-					
+
 					[Composition in the Small](#/23)
+
+					[Single Page Applications](http://pluralsight.com/training/Courses/TableOfContents/spa)
 				</section>
 
 				<section data-markdown>
