@@ -428,19 +428,19 @@
 					<h2>Composition via Routing</h2>
 					<pre><code contenteditable>public static void RegisterRoutes(RouteCollection routes)
 {
-    routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+    routes.IgnoreRoute(&quot;{resource}.axd/{*pathInfo}&quot;);
 
     routes.MapPageRoute(
-        routeName: "Contact",
-        routeUrl: "contact",
-        physicalFile: "~/Contact.aspx",
+        routeName: &quot;Contact&quot;,
+        routeUrl: &quot;contact&quot;,
+        physicalFile: &quot;~/Contact.aspx&quot;,
         checkPhysicalUrlAccess: true
     );
 
     routes.MapRoute(
-        name: "Default",
-        url: "{controller}/{action}/{id}",
-        defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+        name: &quot;Default&quot;,
+        url: &quot;{controller}/{action}/{id}&quot;,
+        defaults: new { controller = &quot;Home&quot;, action = &quot;Index&quot;, id = UrlParameter.Optional }
     );
 }</code></pre>
 
@@ -496,19 +496,19 @@ public interface IHttpModule
 {
     public class ContactsController : ApiController
     {
-        [GET("Contacts")]
+        [GET(&quot;Contacts&quot;)]
         public IEnumerable<Contact> Get() { }
         
-        [GET("Contacts/{id}")]
+        [GET(&quot;Contacts/{id}&quot;)]
         public Contact Get(int id) { }
         
-        [POST("Contacts")]
+        [POST(&quot;Contacts&quot;)]
         public HttpResponseMessage Post(Contact contact) { }
         
-        [PUT("Contacts/{id}")]
+        [PUT(&quot;Contacts/{id}&quot;)]
         public Contact Put(int id, Contact contact) { }
         
-        [DELETE("Contacts/{id}")]
+        [DELETE(&quot;Contacts/{id}&quot;)]
         public Contact Delete(int id) { }
     }
 }</code></pre>
@@ -521,14 +521,14 @@ public interface IHttpModule
 						<h2>Web API Controller &asymp; Resource</h2>
 						<pre><code contenteditable>namespace ContactManager.Controllers.Apis
 {
-    [RoutePrefix("Contacts")]
+    [RoutePrefix(&quot;Contacts&quot;)]
     public class ContactsController : ApiController
     {
         public IEnumerable<Contact> Get() { }
         public HttpResponseMessage Post(Contact contact) { }
     }
 
-    [RoutePrefix("Contacts/{id}")]
+    [RoutePrefix(&quot;Contacts/{id}&quot;)]
     public class ContactController : ApiController
     {
         public Contact Get(int id) { }
@@ -652,7 +652,13 @@ else
 					<section>
 						<h2>Content Negotiation</h2>
 						<pre><code contenteditable>var response = Request.CreateResponse(HttpStatusCode.OK, value, formatter, mediaType);</code></pre>
-						<pre><code contenteditable>var content = new ObjectContent<Contact>(contact, formatter, mediaType);</code></pre>
+						<pre><code contenteditable>var content = new ObjectContent&lt;Contact&gt;(contact, formatter, mediaType);</code></pre>
+						<pre><code contenteditable>IContentNegotiator contentNegotiator =
+    config.GetContentNegotiator();
+ContentNegotiationResult result =
+    contentNegotiator.Negotiate(typeof(Contact),
+                                formatters,
+                                request.Accept);</code></pre>
 
 						<aside class="notes">
 							The ContentNegotiator essentially wraps the result value and produces an output that satisfies both the available formatters and requested format.
@@ -680,12 +686,12 @@ else
 						## HEAD Message Handler
 						<pre><code contenteditable>public class HeadMessageHandler : DelegatingHandler
 {
-    protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+    protected override Task&lt;HttpResponseMessage&gt; SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
         if (request.Method == HttpMethod.Head) {
             request.Method = HttpMethod.Get;
             return base.SendAsync(request, cancellationToken)
-                .ContinueWith<HttpResponseMessage>(task => {
+                .ContinueWith&lt;HttpResponseMessage&gt;(task =&gt; {
                     var response = task.Result;
                     response.RequestMessage.Method = HttpMethod.Head;
                     response.Content = new HeadContent(response.Content);
@@ -727,8 +733,8 @@ else
 					<section data-markdown>
 						## Route-specific MessageHandlers
 						<pre><code contenteditable>config.Routes.MapHttpRoute(
-    name: "",
-    routeTemplate: "",
+    name: &quot;&quot;,
+    routeTemplate: &quot;&quot;,
     defaults: null,
     constraints: null,
     handler: null
@@ -744,16 +750,16 @@ else
 
 						<pre><code contenteditable>
 To&lt;RootController&gt;();
-Add("issues", ri=&gt; ri.To&lt;IssuesController&gt;());
-Add("events", ri =&gt; ri.To&lt;EventsController&gt;());
-Add("networks", rn =&gt; rn.Add("{userid}", ru =&gt; ru.Add("{repoid}", rr =&gt; rr.To&lt;NetworksController&gt;())));
-Add("gists",rg =&gt; rg.To&lt;GistsController&gt;()
-        .Add("public",rp =&gt; rp.To&lt;GistsController&gt;(new { gistfilter = "public" }))
-        .Add("starred", rs =&gt; rs.To&lt;GistsController&gt;(new { gistfilter = "starred" }))
-        .Add("{gistid}", rgi =&gt; rgi.To&lt;GistController&gt;("justid")
-             .Add("comments", rc =&gt; rc.To&lt;GistCommentsController&gt;())
-             .Add("star", rs=&gt; rs.To&lt;GistController&gt;(new { action = "Star" }, "star"))
-             .Add("fork", rf =&gt; rf.To&lt;GistController&gt;(new { action = "Fork" }, "fork"))
+Add(&quot;issues&quot;, ri=&gt; ri.To&lt;IssuesController&gt;());
+Add(&quot;events&quot;, ri =&gt; ri.To&lt;EventsController&gt;());
+Add(&quot;networks&quot;, rn =&gt; rn.Add(&quot;{userid}&quot;, ru =&gt; ru.Add(&quot;{repoid}&quot;, rr =&gt; rr.To&lt;NetworksController&gt;())));
+Add(&quot;gists&quot;,rg =&gt; rg.To&lt;GistsController&gt;()
+        .Add(&quot;public&quot;,rp =&gt; rp.To&lt;GistsController&gt;(new { gistfilter = &quot;public&quot; }))
+        .Add(&quot;starred&quot;, rs =&gt; rs.To&lt;GistsController&gt;(new { gistfilter = &quot;starred&quot; }))
+        .Add(&quot;{gistid}&quot;, rgi =&gt; rgi.To&lt;GistController&gt;(&quot;justid&quot;)
+             .Add(&quot;comments&quot;, rc =&gt; rc.To&lt;GistCommentsController&gt;())
+             .Add(&quot;star&quot;, rs=&gt; rs.To&lt;GistController&gt;(new { action = &quot;Star&quot; }, &quot;star&quot;))
+             .Add(&quot;fork&quot;, rf =&gt; rf.To&lt;GistController&gt;(new { action = &quot;Fork&quot; }, &quot;fork&quot;))
     ));</code></pre>
 
 						<aside class="notes">
